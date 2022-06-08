@@ -10,7 +10,7 @@ pthread_barrier_t barrier;
 sem_t semaforo_binario;
 int counter = 0;
 char *buffer;
-int threadCount = 0;
+int threads = 0;
 int indiceBuffer = 0;
 int tamBuffer = 0;
 char identificadores[7] = {'1','2','3','4','5','6','7'};
@@ -71,8 +71,8 @@ int main(int argc, char **argv)
 	int quantidadeThreads;
 	int politica = SCHED_OTHER;	
 
-	threadCount = atoi(argv[1]);
-	pthread_barrier_init(&barrier, NULL,threadCount);
+	threads = atoi(argv[1]);
+	pthread_barrier_init(&barrier, NULL,threads);
 
 	sem_init(&semaforo_binario, 1, 1);
 	tamBuffer = atoi(argv[2]);
