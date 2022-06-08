@@ -54,6 +54,18 @@ void *run(void *data)
 	return 0;
 }
 
+void posProcessamento(char *buffer){	
+	char ultimaLetra;
+	printf("Pós-processamento: ");
+	for(int i = 0; i < tamBuffer; i++){
+		if(ultimaLetra == buffer[i]){
+			continue;
+		}
+		printf("%c",buffer[i]);
+		ultimaLetra = buffer[i];
+	}
+}
+
 int main(int argc, char **argv)
 {
 	int quantidadeThreads;
@@ -61,8 +73,9 @@ int main(int argc, char **argv)
 
 	threadCount = atoi(argv[1]);
 	pthread_barrier_init(&barrier, NULL,threadCount);
+
 	sem_init(&semaforo_binario, 1, 1);
-	tamBuffer = atoi(argv[2]) * 1000;
+	tamBuffer = atoi(argv[2]);
 	buffer = malloc(sizeof(char) * atoi(argv[2]));	
 
 	quantidadeThreads = atoi(argv[1]);
@@ -78,8 +91,10 @@ int main(int argc, char **argv)
 	{
 		pthread_join(threads[i], NULL);
 	}
-		
-	printf("%s", buffer);	
+
+	printf("%s\n\n", buffer);
+	posProcessamento(buffer);
+	printf("\n\n");
 
 	sem_destroy(&semaforo_binario);
 	return 0;
